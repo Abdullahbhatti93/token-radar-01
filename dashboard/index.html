@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LaunchScope — Token Launch Radar</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true"></div>
+    <div>
+      <h1>LaunchScope</h1>
+      <p class="tagline">Token launch radar — pre-token protocols ranked by comparables-implied value</p>
+    </div>
+  </div>
+  <div class="snapshot-note" id="snapshot-note"></div>
+</header>
+
+<div class="stats" id="stats" aria-label="Board summary"></div>
+
+<nav class="views" aria-label="Views">
+  <button type="button" class="view-btn is-active" data-view="board">The board</button>
+  <button type="button" class="view-btn" data-view="live">Already trading</button>
+  <button type="button" class="view-btn" data-view="model">How the model works</button>
+</nav>
+
+<main>
+  <section id="view-board" class="view">
+    <div class="controls">
+      <label class="ctl ctl-search">
+        <span>Search</span>
+        <input id="f-q" type="search" placeholder="Protocol name or slug" autocomplete="off">
+      </label>
+      <label class="ctl">
+        <span>Category</span>
+        <select id="f-cat"></select>
+      </label>
+      <label class="ctl">
+        <span>Chain</span>
+        <select id="f-chain"></select>
+      </label>
+      <label class="ctl">
+        <span>Sort by</span>
+        <select id="f-sort">
+          <option value="implied">Implied value</option>
+          <option value="tvl">TVL</option>
+          <option value="change">7-day TVL change</option>
+          <option value="age">Time without a token</option>
+          <option value="name">Name</option>
+        </select>
+      </label>
+      <label class="ctl ctl-check">
+        <input id="f-watch" type="checkbox">
+        <span>Watchlist only</span>
+      </label>
+    </div>
+    <p class="count" id="board-count"></p>
+    <div class="tablewrap">
+      <table class="board">
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th>Protocol</th>
+            <th>Category</th>
+            <th class="num">TVL</th>
+            <th class="num">7d</th>
+            <th class="num">No token for</th>
+            <th class="num">Cat. multiple</th>
+            <th class="num">Implied value</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="board-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="view-live" class="view" hidden>
+    <p class="view-note">These protocols already have a trading token, so no model prices them: the
+    market cap shown is the market's own figure from the same snapshot. They are the comparison set —
+    their market-cap-to-TVL ratios are what price the pre-token board.</p>
+    <div class="tablewrap">
+      <table class="board">
+        <thead>
+          <tr>
+            <th>Protocol</th>
+            <th>Category</th>
+            <th>Chains</th>
+            <th class="num">TVL</th>
+            <th class="num">Market cap</th>
+            <th class="num">7d</th>
+          </tr>
+        </thead>
+        <tbody id="live-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="view-model" class="view" hidden>
+    <div id="model-body"></div>
+  </section>
+</main>
+
+<div id="detail" class="detail" hidden role="dialog" aria-modal="false" aria-label="Protocol detail">
+  <div class="detail-card" id="detail-card"></div>
+</div>
+
+<footer class="foot">
+  <p>Implied values are this model's own estimates, derived only from the snapshot's figures; they are
+  not predictions that a token will be issued, or when. A protocol is described as recording no token
+  when the snapshot carries none for it. Farm plans are starting points for your own research, not
+  financial advice.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
